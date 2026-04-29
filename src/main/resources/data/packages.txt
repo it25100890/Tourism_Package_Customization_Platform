@@ -1,0 +1,3 @@
+P001,Adventure Package,White water rafting and hiking,Kithulgala,25000,5,true
+P002,Honeymoon Package,Romantic hill country & beach tour,Nuwara Eliya,40000,5,true
+P003,Relaxation Package,Cultural and beach relaxation,Bentota,30000,4,true
