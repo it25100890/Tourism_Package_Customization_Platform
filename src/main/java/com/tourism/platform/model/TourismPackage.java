@@ -1,8 +1,5 @@
 package com.tourism.platform.model;
 
-import lombok.Data;
-
-@Data
 public class TourismPackage {
     private String packageId;
     private String packageName;
