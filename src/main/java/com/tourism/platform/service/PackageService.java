@@ -1,16 +1,17 @@
 package com.tourism.platform.service;
 
-import com.tourism.platform.model.User;
-import com.tourism.platform.model.AdminUser;
+import com.tourism.platform.model.TourPackage;
+import com.tourism.platform.model.LuxuryPackage;
+import com.tourism.platform.model.StandardPackage;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class PackageService {
 
-    private static final String FILE_PATH = "users.txt";
+    private static final String FILE_PATH = "packages.txt";
 
     private void touch() {
         try {
@@ -45,68 +46,73 @@ public class UserService {
         }
     }
 
-    public void saveUser(User u) {
+    public void savePackage(TourPackage p) {
         try (PrintWriter o = new PrintWriter(new FileWriter(FILE_PATH, true))) {
-            o.println(u.toString());
+            o.println(p.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateUser(User u) {
+    public void updatePackage(TourPackage p) {
         List<String> lines = readLines();
-        List<String> newLines = new ArrayList<>();
-        
+        List<String> updatedLines = new ArrayList<>();
+
         for (String l : lines) {
-            if (l.startsWith(u.getUsername() + "|")) {
-                newLines.add(u.toString());
+            if (l.startsWith(p.getId() + "|")) {
+                updatedLines.add(p.toString());
             } else {
-                newLines.add(l);
+                updatedLines.add(l);
             }
         }
-        
-        writeLines(newLines);
+        writeLines(updatedLines);
     }
 
-    public void deleteUser(String username) {
+    public void deletePackage(String id) {
         List<String> lines = readLines();
-        List<String> newLines = new ArrayList<>();
-        
+        List<String> updatedLines = new ArrayList<>();
+
         for (String l : lines) {
-            if (!l.startsWith(username + "|")) {
-                newLines.add(l);
+            if (!l.startsWith(id + "|")) {
+                updatedLines.add(l);
             }
         }
-        
-        writeLines(newLines);
+        writeLines(updatedLines);
     }
 
-    public List<User> getAllUsers() {
+    public List<TourPackage> getPackages() {
         List<String> lines = readLines();
-        List<User> userList = new ArrayList<>();
-        
+        List<TourPackage> packageList = new ArrayList<>();
+
         for (String l : lines) {
             try {
                 String[] p = l.split("\\|");
-                if (p.length >= 9) {
-                    User u = new User(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7]);
-                    userList.add(u);
+                if (p.length >= 4) {
+                    TourPackage pkg;
+                    String type = p.length > 5 ? p[5] : "Standard";
+
+                    if ("Luxury".equalsIgnoreCase(type)) {
+                        pkg = new LuxuryPackage(p[0], p[1], p[2], Double.parseDouble(p[3]), p[4]);
+                    } else {
+                        pkg = new StandardPackage(p[0], p[1], p[2], Double.parseDouble(p[3]), p[4]);
+                    }
+                    packageList.add(pkg);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        return userList;
+        return packageList;
     }
 
-    public User getUserByUsername(String username) {
-        List<User> allUsers = getAllUsers();
-        for (User u : allUsers) {
-            if (u.getUsername().equalsIgnoreCase(username)) {
-                return u;
+    public TourPackage getPackageById(String id) {
+        List<TourPackage> allPackages = getPackages();
+        for (TourPackage p : allPackages) {
+            if (p.getId().equalsIgnoreCase(id)) {
+                return p;
             }
         }
         return null;
     }
 }
+
