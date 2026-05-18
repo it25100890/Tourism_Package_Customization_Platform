@@ -9,9 +9,13 @@ public class TourismPackage {
     private int duration;
     private boolean availability;
 
+<<<<<<< HEAD
 
     //Create a parameterized constructor
     public TourismPackage(String packageId, String packageName, String description, String location, double price, int duration,boolean availability) {
+=======
+    public TourismPackage(String packageId, String packageName, String description, String location, double price, int duration, boolean availability) {
+>>>>>>> 60e5eab3024bb3a4cf8574d5cbce8174a9ed5b64
         this.packageId = packageId;
         this.packageName = packageName;
         this.description = description;
@@ -21,7 +25,10 @@ public class TourismPackage {
         this.availability = availability;
 
     }
+<<<<<<< HEAD
     //get and set packageId,packageName,description,location,price and duration.
+=======
+>>>>>>> 60e5eab3024bb3a4cf8574d5cbce8174a9ed5b64
 
     public String getPackageId() {
         return packageId;
