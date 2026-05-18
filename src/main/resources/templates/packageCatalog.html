@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeRoute - Discover Sri Lanka</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body { padding-top: 70px; background-color: #f4f4f4; }
+        .package-card { border: 1px solid #ccc; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid px-lg-5">
+        <a class="navbar-brand" th:href="@{/}">VibeRoute</a>
+        <div class="collapse navbar-collapse d-flex justify-content-end">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/packages}">Packages</a></li>
+                <li th:if="${session.user == null}" class="nav-item ml-lg-3">
+                    <a class="btn btn-warning btn-sm rounded-pill px-4 text-dark font-weight-bold shadow-sm" th:href="@{/register_page}">Login / Register</a>
+                </li>
+                <li th:if="${session.user != null}" class="nav-item ml-lg-3">
+                    <div class="dropdown">
+                        <button class="btn btn-warning btn-sm rounded-pill px-4 text-dark font-weight-bold shadow-sm dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle mr-1"></i> <span th:text="${session.user.fullName}">User</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right border-0 shadow-lg rounded-lg" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" th:href="@{/profile}"><i class="fas fa-id-badge mr-2"></i> Profile</a>
+                            <a class="dropdown-item" th:href="@{/my-bookings}"><i class="fas fa-map-marked-alt mr-2"></i> My Bookings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" th:href="@{/logout}"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="search-container shadow-lg">
+        <h1 class="text-white mb-4">Discover Your Next Adventure</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8 px-4">
+                <form th:action="@{/packages}" method="get" class="input-group">
+                    <input type="text" name="search" class="form-control form-control-lg border-0" placeholder="Where do you want to go?" style="border-radius: 30px 0 0 30px; height: 60px; padding-left: 30px;">
+                    <div class="input-group-append">
+                        <button class="btn btn-warning px-5 font-weight-bold" type="submit" style="border-radius: 0 30px 30px 0; color: #003366;">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="p : ${packages}">
+            <div class="card package-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge badge-primary px-3 py-2 rounded-pill" th:text="${p.category}"></span>
+                            <span th:if="${p.type == 'Luxury'}" class="badge badge-warning px-3 py-2 rounded-pill ml-1"><i class="fas fa-crown mr-1"></i>Luxury</span>
+                            <span th:if="${p.type == 'Standard'}" class="badge badge-info px-3 py-2 rounded-pill ml-1">Standard</span>
+                        </div>
+                        <h4 class="text-primary font-weight-bold mb-0">$<span th:text="${p.price}"></span></h4>
+                    </div>
+                    <h3 class="heading-font mb-2" th:text="${p.title}"></h3>
+                    <p class="text-muted small"><i class="fas fa-map-marker-alt mr-2"></i><span th:text="${p.destination}"></span></p>
+                    <hr>
+                    <form th:action="@{'/book/direct/'+${p.id}}" method="get" class="mb-2">
+                        <input type="date" name="travelDate" required class="form-control form-control-sm mb-2" style="border-radius: 20px;">
+                        <button type="submit" class="btn btn-warning btn-block font-weight-bold rounded-pill">Instant Book</button>
+                    </form>
+                    <a th:href="@{'/customize/'+${p.id}}" class="btn btn-outline-primary btn-block font-weight-bold rounded-pill mb-2">Customize</a>
+                    <a th:href="@{'/package/details/'+${p.id}}" class="btn btn-outline-secondary btn-block font-weight-bold rounded-pill small">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
