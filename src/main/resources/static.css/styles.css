@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+    background-color: #f0f8ff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    background-color: #003366;
+}
+
+.navbar-brand {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8rem;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.yogawinetravel.com/wp-content/uploads/2016/05/Sigiriya-Lion-Rock-drone-photo-in-Sri-Lanka.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    height: 100%; /* Ensure all cards in a row have the same height */
+}
+
+.card-img-top {
+    height: 200px; /* Fixed height for all destination images */
+    object-fit: cover; /* Maintain aspect ratio without stretching */
+}
+
+.btn-primary {
+    background-color: #ff9f43; /* Vibrant Orange/Gold */
+    border: none;
+    font-weight: bold;
+    padding: 12px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 159, 67, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: #ffb142;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 159, 67, 0.6);
+}
+
+.bg-nature {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1552055568-e9943cd2a08f?q=80&w=1074&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.bg-register {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.squarespace-cdn.com/content/v1/5a3bb03b4c326d76de73ddaa/1754893699113-SNDNJB1BQBA7TKOU5RH1/The+Common+Wanderer-9897-2.jpg?format=1000w');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.custom-card {
+    border-radius: 15px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.form-control:focus {
+    border-color: #003366;
+    box-shadow: 0 0 0 0.2rem rgba(0, 51, 102, 0.25);
+}
+
+.footer {
+    background-color: #003366;
+    color: white;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+/* Pop-up Animation */
+@keyframes popUp {
+    0% { transform: scale(0.8); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.btn-pop {
+    animation: popUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-pop:hover {
+    transform: scale(1.1) !important;
+    transition: transform 0.3s ease;
+}
