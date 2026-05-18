@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeRoute - My Bookings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body style="background: #f0f8ff;">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" th:href="@{/}" style="font-family: 'Pacifico';">VibeRoute</a>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-5" style="color: #003366; font-weight: bold;">Your Customized Bookings (Student 3)</h2>
+        
+        <div class="table-responsive bg-white p-4 shadow-sm rounded">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Traveler</th>
+                        <th>Package ID</th>
+                        <th>Travel Date</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="b : ${bookings}">
+                        <td th:text="${b.bookingId}" class="font-weight-bold"></td>
+                        <td th:text="${b.username}"></td>
+                        <td th:text="${b.packageId}"></td>
+                        <td th:text="${b.travelDate}"></td>
+                        <td th:text="'$' + ${b.totalAmount}" class="text-success font-weight-bold"></td>
+                        <td><span class="badge badge-info" th:text="${b.status}"></span></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(bookings)}">
+                        <td colspan="6" class="text-center py-5 text-muted">You haven't made any bookings yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-4">
+            <a th:href="@{/packages}" class="btn btn-primary">Book a New Tour</a>
+        </div>
+    </div>
+</body>
+</html>

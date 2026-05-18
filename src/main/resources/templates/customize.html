@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Own Trip - VibeRoute</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Space+Grotesk:wght@300..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1600') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #003366 !important;
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            color: #ffcc00 !important;
+        }
+        .customize-container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .customize-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .card-header-custom {
+            background: #003366;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .card-header-custom h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0;
+            font-size: 2.2rem;
+        }
+        .form-section {
+            padding: 40px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #003366;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            height: auto;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(0, 51, 102, 0.2);
+            border-color: #003366;
+        }
+        .btn-confirm {
+            background: #ffcc00;
+            color: #003366;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            margin-top: 20px;
+        }
+        .btn-confirm:hover {
+            background: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .price-badge {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #003366;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">VibeRoute</a>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link text-white" th:href="@{/}">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container customize-container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card customize-card">
+                    <div class="card-header-custom">
+                        <h2>Customize Your Own Trip</h2>
+                        <p class="mb-0">Tailor every detail for your perfect adventure</p>
+                    </div>
+                    <div class="form-section">
+                        <form th:action="@{/book}" method="post">
+                            <input type="hidden" name="bookingId" th:value="${booking != null ? booking.bookingId : ''}">
+                            <input type="hidden" name="packageId" th:value="${tp != null ? tp.id : (booking != null ? booking.packageId : '')}">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-thumbtack mr-2"></i>Start Location</label>
+                                        <select class="form-control" name="startLocation" required>
+                                            <option value="" disabled selected>Select Starting District</option>
+                                            <option value="Colombo">Colombo</option>
+                                            <option value="Gampaha">Gampaha</option>
+                                            <option value="Kalutara">Kalutara</option>
+                                            <option value="Kandy">Kandy</option>
+                                            <option value="Matale">Matale</option>
+                                            <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                            <option value="Galle">Galle</option>
+                                            <option value="Matara">Matara</option>
+                                            <option value="Hambantota">Hambantota</option>
+                                            <option value="Jaffna">Jaffna</option>
+                                            <option value="Kilinochchi">Kilinochchi</option>
+                                            <option value="Mannar">Mannar</option>
+                                            <option value="Vavuniya">Vavuniya</option>
+                                            <option value="Mullaitivu">Mullaitivu</option>
+                                            <option value="Batticaloa">Batticaloa</option>
+                                            <option value="Ampara">Ampara</option>
+                                            <option value="Trincomalee">Trincomalee</option>
+                                            <option value="Kurunegala">Kurunegala</option>
+                                            <option value="Puttalam">Puttalam</option>
+                                            <option value="Anuradhapura">Anuradhapura</option>
+                                            <option value="Polonnaruwa">Polonnaruwa</option>
+                                            <option value="Badulla">Badulla</option>
+                                            <option value="Moneragala">Moneragala</option>
+                                            <option value="Ratnapura">Ratnapura</option>
+                                            <option value="Kegalle">Kegalle</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-clock mr-2"></i>Duration (Days)</label>
+                                        <select class="form-control" name="duration" required>
+                                            <option value="" disabled selected>Select Duration</option>
+                                            <option value="1">1 Day</option>
+                                            <option value="2">2 Days</option>
+                                            <option value="3">3 Days</option>
+                                            <option value="4">4 Days</option>
+                                            <option value="5">5 Days</option>
+                                            <option value="7">1 Week</option>
+                                            <option value="10">10 Days</option>
+                                            <option value="14">2 Weeks</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-map-marker-alt mr-2"></i>Destination 1</label>
+                                        <select class="form-control" name="destination1">
+                                            <option value="" selected>Select Location (Optional)</option>
+                                            <option value="Sigiriya">Sigiriya Rock</option>
+                                            <option value="Temple of the Tooth">Temple of the Tooth</option>
+                                            <option value="Udawalawe National Park">Udawalawe National Park</option>
+                                            <option value="Horton Plains National Park">Horton Plains National Park</option>
+                                            <option value="Yala National Park">Yala National Park</option>
+                                            <option value="Galle Dutch Fort">Galle Dutch Fort</option>
+                                            <option value="Sri Pada / Adam's Peak">Sri Pada / Adam's Peak</option>
+                                            <option value="Mirissa Beach">Mirissa Beach</option>
+                                            <option value="Pinnawala">Pinnawala Elephant Orphanage</option>
+                                            <option value="Wilpattu National Park">Wilpattu National Park</option>
+                                            <option value="Weligama">Weligama Bay</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <select class="form-control form-control-sm" name="hotel1">
+                                            <option value="" selected>Preferred Hotel Category</option>
+                                            <option value="5">5 Star Hotel</option>
+                                            <option value="4">4 Star Hotel</option>
+                                            <option value="3">3 Star Hotel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-map-marker-alt mr-2"></i>Destination 2</label>
+                                        <select class="form-control" name="destination2">
+                                            <option value="" selected>Select Location (Optional)</option>
+                                            <option value="Sigiriya">Sigiriya Rock</option>
+                                            <option value="Temple of the Tooth">Temple of the Tooth</option>
+                                            <option value="Udawalawe National Park">Udawalawe National Park</option>
+                                            <option value="Horton Plains National Park">Horton Plains National Park</option>
+                                            <option value="Yala National Park">Yala National Park</option>
+                                            <option value="Galle Dutch Fort">Galle Dutch Fort</option>
+                                            <option value="Sri Pada / Adam's Peak">Sri Pada / Adam's Peak</option>
+                                            <option value="Mirissa Beach">Mirissa Beach</option>
+                                            <option value="Pinnawala">Pinnawala Elephant Orphanage</option>
+                                            <option value="Wilpattu National Park">Wilpattu National Park</option>
+                                            <option value="Weligama">Weligama Bay</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <select class="form-control form-control-sm" name="hotel2">
+                                            <option value="" selected>Preferred Hotel Category</option>
+                                            <option value="5">5 Star Hotel</option>
+                                            <option value="4">4 Star Hotel</option>
+                                            <option value="3">3 Star Hotel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-map-marker-alt mr-2"></i>Destination 3</label>
+                                        <select class="form-control" name="destination3">
+                                            <option value="" selected>Select Location (Optional)</option>
+                                            <option value="Sigiriya">Sigiriya Rock</option>
+                                            <option value="Temple of the Tooth">Temple of the Tooth</option>
+                                            <option value="Udawalawe National Park">Udawalawe National Park</option>
+                                            <option value="Horton Plains National Park">Horton Plains National Park</option>
+                                            <option value="Yala National Park">Yala National Park</option>
+                                            <option value="Galle Dutch Fort">Galle Dutch Fort</option>
+                                            <option value="Sri Pada / Adam's Peak">Sri Pada / Adam's Peak</option>
+                                            <option value="Mirissa Beach">Mirissa Beach</option>
+                                            <option value="Pinnawala">Pinnawala Elephant Orphanage</option>
+                                            <option value="Wilpattu National Park">Wilpattu National Park</option>
+                                            <option value="Weligama">Weligama Bay</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <select class="form-control form-control-sm" name="hotel3">
+                                            <option value="" selected>Preferred Hotel Category</option>
+                                            <option value="5">5 Star Hotel</option>
+                                            <option value="4">4 Star Hotel</option>
+                                            <option value="3">3 Star Hotel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-users mr-2"></i>Person/Persons</label>
+                                        <select class="form-control" name="persons" required>
+                                            <option value="" disabled selected>Select Number of Persons</option>
+                                            <option value="1">1 Person</option>
+                                            <option value="2">2 Persons</option>
+                                            <option value="3">3 Persons</option>
+                                            <option value="4">4 Persons</option>
+                                            <option value="5">5 Persons</option>
+                                            <option value="group">Group (6+)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-calendar-alt mr-2"></i>Travel Date</label>
+                                        <input type="date" name="travelDate" class="form-control" th:value="${booking != null ? booking.travelDate : ''}" required max="2030-12-31">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="price-badge">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-tag mr-2"></i>Estimated Total Cost:</span>
+                                    <h4 class="mb-0 text-primary font-weight-bold">$<span id="displayPrice">0</span></h4>
+                                </div>
+                                <input type="hidden" id="hiddenTotalCost" name="totalCost" value="0">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-confirm btn-block shadow-sm">
+                                <i class="fas fa-check-circle mr-2"></i>Confirm My Custom Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap and FontAwesome -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function calculateTotal() {
+            let duration = parseInt(document.getElementsByName('duration')[0].value) || 0;
+            let personsVal = document.getElementsByName('persons')[0].value;
+            let persons = personsVal === 'group' ? 6 : (parseInt(personsVal) || 0);
+            
+            let hotelPremium = 0;
+            const hotelSelects = ['hotel1', 'hotel2', 'hotel3'];
+            hotelSelects.forEach(name => {
+                let val = document.getElementsByName(name)[0].value;
+                if (val === '5') hotelPremium += 100;
+                else if (val === '4') hotelPremium += 60;
+                else if (val === '3') hotelPremium += 30;
+            });
+
+            // Logic: (Duration * 40) + (Persons * 100) + (Hotel Premiums * Duration)
+            let total = 0;
+            if (duration > 0 && persons > 0) {
+                total = (duration * 50) + (persons * 100) + (hotelPremium * duration);
+            }
+
+            document.getElementById('displayPrice').innerText = total;
+            document.getElementById('hiddenTotalCost').value = total;
+        }
+
+        // Add event listeners to all relevant fields
+        document.addEventListener('DOMContentLoaded', function() {
+            const fields = ['duration', 'persons', 'hotel1', 'hotel2', 'hotel3'];
+            fields.forEach(fieldName => {
+                document.getElementsByName(fieldName)[0].addEventListener('change', calculateTotal);
+            });
+            
+            // Set min date to today
+            const dateInput = document.getElementsByName('travelDate')[0];
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+            
+            calculateTotal(); // Initial calculation
+        });
+    </script>
+</body>
+</html>
