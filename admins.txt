@@ -1,1 +1,2 @@
 admin@mail.com|Admin User|admin123|0771234567|Colombo|1990-01-01|ADMIN-NIC|Male|ADMIN|Full Access
+Test@gmail.com|Saran Hameed|123qwe|000-000|Sri Lanka|1990-01-01|N/A|Other|ADMIN|Manager

@@ -3,3 +3,4 @@ TP-55667788|Kandy Sacred Retreat|Kandy|150.00|Cultural & Nature|Luxury
 TP-99887766|Ella Scenic Escape|Ella|95.00|Adventure & Scenic|Standard
 TP-33445566|Sigiriya Rock Climbing|Sigiriya|180.00|Adventure & History|Luxury
 TP-12345678|Colombo City Vibes|Colombo|80.00|Urban Exploration|Standard
+TP-390a90b9|Colombo |Colombo Pettah|101.0|Adventure|Standard
