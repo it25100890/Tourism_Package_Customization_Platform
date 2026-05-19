@@ -1,6 +1,6 @@
 package com.tourism.platform.service;
 
-import com.tourism.model.Customization;
+import com.tourism.platform.model.Customization;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;

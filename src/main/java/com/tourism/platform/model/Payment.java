@@ -19,14 +19,29 @@ public abstract class Payment implements Serializable {
 
     public abstract String processPayment();
 
-    public String getPaymentId() { return paymentId; }
-    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
-    public String getBookingId() { return bookingId; }
-    public void setBookingId(String bookingId) { this.bookingId = bookingId; }
-    public double getAmount() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
-    public String getPaymentDate() { return paymentDate; }
-    public void setPaymentDate(String paymentDate) { this.paymentDate = paymentDate; }
+    public String getPaymentId()
+    { return paymentId; }
+
+    public void setPaymentId(String paymentId)
+    { this.paymentId = paymentId; }
+
+    public String getBookingId()
+    { return bookingId; }
+
+    public void setBookingId(String bookingId)
+    { this.bookingId = bookingId; }
+
+    public double getAmount()
+    { return amount; }
+
+    public void setAmount(double amount)
+    { this.amount = amount; }
+
+    public String getPaymentDate()
+    { return paymentDate; }
+
+    public void setPaymentDate(String paymentDate)
+    { this.paymentDate = paymentDate; }
 
     @Override
     public String toString() {

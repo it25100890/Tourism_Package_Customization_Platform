@@ -1,14 +1,14 @@
 package com.tourism.platform.controller;
 
-import com.tourism.model.Customization;
-import com.tourism.model.Booking;
-import com.tourism.service.CustomizationService;
-import com.tourism.service.BookingService;
+import com.tourism.platform.model.Customization;
+import com.tourism.platform.model.Booking;
+import com.tourism.platform.service.CustomizationService;
+import com.tourism.platform.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/customization")

@@ -12,11 +12,11 @@ public class CardPayment extends Payment {
 
     @Override
     public String processPayment() {
-        return "Processed Card Payment for amount: $" + amount;
-    }
+        return "Processed Card Payment for amount: $" + amount;}
 
     public String getCardNumberMasked() { return cardNumberMasked; }
-    public void setCardNumberMasked(String cardNumberMasked) { this.cardNumberMasked = cardNumberMasked; }
+    public void setCardNumberMasked(String cardNumberMasked)
+    { this.cardNumberMasked = cardNumberMasked; }
 
     @Override
     public String toString() {
