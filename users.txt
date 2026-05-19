@@ -1,1 +1,2 @@
 Test@gmail.com|Alex Banner|123qwe|1234512345|Sri Lanka|2009-03-31|200507903022|Male|USER
+Test1@gmail.com|Test1|123qwe|0712345678|Sri Lanka|2008-06-10|200507903021|Male|USER

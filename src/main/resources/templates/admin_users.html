@@ -99,7 +99,7 @@
                 <div class="col-md-3">
                     <div class="card admin-card p-4 text-center border-left border-success" style="border-width: 5px !important;">
                         <h6 class="text-muted">Total Revenue</h6>
-                        <h2 class="font-weight-bold text-success">$<span th:text="${#aggregates.sum(bookings.![totalCost])}">0</span></h2>
+                        <h2 class="font-weight-bold text-success">$<span th:text="${#aggregates.sum(bookings.![totalAmount])}">0</span></h2>
                     </div>
                 </div>
                 <div class="col-md-3">
