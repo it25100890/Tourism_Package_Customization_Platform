@@ -1,4 +1,4 @@
-package com.tourism.model;
+package com.tourism.platform.model;
 
 // Student 4: Admin Management (Inheritance)
 public class AdminUser extends User {

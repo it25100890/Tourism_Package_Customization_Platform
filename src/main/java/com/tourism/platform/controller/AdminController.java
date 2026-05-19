@@ -1,10 +1,10 @@
-package com.tourism.controller;
+package com.tourism.platform.controller;
 
-import com.tourism.model.*;
-import com.tourism.service.AdminService;
-import com.tourism.service.UserService;
-import com.tourism.service.PackageService;
-import com.tourism.service.BookingService;
+import com.tourism.platform.model.*;
+import com.tourism.platform.service.AdminService;
+import com.tourism.platform.service.UserService;
+import com.tourism.platform.service.PackageService;
+import com.tourism.platform.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

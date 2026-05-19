@@ -1,6 +1,6 @@
-package com.tourism.service;
+package com.tourism.platform.service;
 
-import com.tourism.model.AdminUser;
+import com.tourism.platform.model.AdminUser;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;
