@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeRoute - My Bookings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Space+Grotesk:wght@300..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #ffcc00;
+            --bg-light: #f8f9fa;
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-light);
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+        }
+        .header-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .booking-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .booking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .badge-status {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 50px;
+        }
+        .btn-custom {
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg py-3">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">VibeRoute</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link font-weight-bold" th:href="@{/}"><i class="fas fa-home mr-1"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link font-weight-bold text-danger" th:href="@{/logout}"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4 mb-5">
+        <h2 class="header-title mb-4">My Bookings Dashboard</h2>
+        
+        <!-- Alerts -->
+        <div th:if="${param.update != null}" class="alert alert-success alert-dismissible fade show shadow-sm rounded-lg">
+            <i class="fas fa-check-circle mr-2"></i> Booking updated successfully!
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <div th:if="${param.refund != null}" class="alert alert-info alert-dismissible fade show shadow-sm rounded-lg">
+            <i class="fas fa-info-circle mr-2"></i> Booking cancelled. A refund has been initiated.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+
+        <div class="row" th:if="${not #lists.isEmpty(bookings)}">
+            <div class="col-12" th:each="b : ${bookings}">
+                <div class="card booking-card">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <span class="text-muted small text-uppercase font-weight-bold">Booking Ref</span>
+                                <h5 class="font-weight-bold text-dark mb-0" th:text="${b.bookingId}"></h5>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="text-muted small text-uppercase font-weight-bold">Package</span>
+                                <p class="mb-0 font-weight-bold" th:text="${b.packageId}"></p>
+                                <small class="text-muted" th:text="'Date: ' + ${b.travelDate}"></small>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small text-uppercase font-weight-bold">Total</span>
+                                <h5 class="text-primary font-weight-bold mb-0" th:text="'$' + ${b.totalAmount}"></h5>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="badge badge-status" 
+                                      th:classappend="${b.status == 'Paid' ? 'badge-success' : (b.status == 'Cancelled' ? 'badge-danger' : 'badge-warning')}" 
+                                      th:text="${b.status}">
+                                </span>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <a th:if="${b.status != 'Cancelled'}" th:href="@{'/booking/edit/' + ${b.bookingId}}" class="btn btn-outline-primary btn-custom mb-2 w-100"><i class="fas fa-edit mr-1"></i> Edit</a>
+                                <a th:if="${b.status == 'Pending Payment'}" th:href="@{'/payment/' + ${b.bookingId}}" class="btn btn-warning btn-custom w-100 mb-2"><i class="fas fa-credit-card mr-1"></i> Pay Now</a>
+                                <a th:if="${b.status != 'Cancelled'}" th:href="@{'/delete-booking/' + ${b.bookingId}}" onclick="return confirm('Are you sure you want to cancel this booking?')" class="btn btn-outline-danger btn-custom w-100"><i class="fas fa-times mr-1"></i> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(bookings)}">
+            <i class="fas fa-suitcase-rolling text-muted mb-3" style="font-size: 4rem; opacity: 0.5;"></i>
+            <h4 class="font-weight-bold text-dark">No Bookings Yet</h4>
+            <p class="text-muted mb-4">It looks like you haven't booked any adventures with us.</p>
+            <a th:href="@{/packages}" class="btn btn-primary rounded-pill px-4 font-weight-bold"><i class="fas fa-search mr-2"></i> Explore Packages</a>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

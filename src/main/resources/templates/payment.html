@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeRoute - Secure Payment</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Space+Grotesk:wght@300..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #ffcc00;
+            --bg-light: #f8f9fa;
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-light);
+        }
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+        }
+        .payment-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .payment-header {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .payment-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        .btn-custom {
+            background: var(--secondary);
+            color: var(--primary);
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 12px;
+            transition: 0.3s;
+            border: none;
+        }
+        .btn-custom:hover {
+            background: #e6b800;
+            transform: scale(1.02);
+        }
+        .summary-box {
+            background: #f1f4f8;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg py-3">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">VibeRoute</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link font-weight-bold" th:href="@{/my-bookings}">My Bookings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card payment-card">
+                    <div class="payment-header">
+                        <h3>Complete Your Payment</h3>
+                        <p class="mb-0 text-light opacity-75">Secure Checkout</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <div class="summary-box text-center">
+                            <p class="text-muted mb-1 text-uppercase font-weight-bold" style="font-size: 0.85rem;">Total Amount Due</p>
+                            <div class="price-tag" th:text="'$' + ${booking != null ? booking.totalAmount : '0.00'}">$0.00</div>
+                            <p class="mb-0 mt-2 text-dark small" th:if="${booking != null}">
+                                Booking Ref: <strong th:text="${booking.bookingId}"></strong><br>
+                                Package: <strong th:text="${booking.packageId}"></strong>
+                            </p>
+                        </div>
+
+                        <form th:action="@{/process-payment}" method="post">
+                            <input type="hidden" name="bookingId" th:value="${booking != null ? booking.bookingId : ''}">
+                            
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold text-dark mb-3">Select Payment Method</label>
+                                
+                                <div class="custom-control custom-radio mb-3 p-3 border rounded shadow-sm">
+                                    <input type="radio" id="methodCard" name="method" value="Card" class="custom-control-input" required checked onchange="toggleCardDetails()">
+                                    <label class="custom-control-label font-weight-bold d-flex align-items-center" for="methodCard">
+                                        <i class="fas fa-credit-card text-primary mr-3" style="font-size: 1.5rem;"></i> Credit / Debit Card
+                                    </label>
+                                </div>
+                                
+                                <div id="cardDetails" class="bg-light p-3 rounded mb-3 border">
+                                    <div class="form-group">
+                                        <label class="small font-weight-bold">Card Number</label>
+                                        <input type="text" class="form-control rounded-pill" placeholder="0000 0000 0000 0000" id="cardNumberInput" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="small font-weight-bold">Expiry Date</label>
+                                                <input type="text" class="form-control rounded-pill" placeholder="MM/YY" id="cardExpiryInput" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="small font-weight-bold">CVC</label>
+                                                <input type="password" class="form-control rounded-pill" placeholder="123" id="cardCvcInput" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="custom-control custom-radio p-3 border rounded shadow-sm">
+                                    <input type="radio" id="methodCash" name="method" value="Cash" class="custom-control-input" required onchange="toggleCardDetails()">
+                                    <label class="custom-control-label font-weight-bold d-flex align-items-center" for="methodCash">
+                                        <i class="fas fa-money-bill-wave text-success mr-3" style="font-size: 1.5rem;"></i> Pay on Arrival (Cash)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-custom btn-block btn-lg shadow-sm mt-4">
+                                Confirm & Pay Now <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <a th:href="@{/my-bookings}" class="text-muted small font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Return to My Bookings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCardDetails() {
+            const cardDetails = document.getElementById('cardDetails');
+            const methodCard = document.getElementById('methodCard');
+            const cardInputs = document.querySelectorAll('#cardDetails input');
+            
+            if (methodCard.checked) {
+                cardDetails.style.display = 'block';
+                cardInputs.forEach(input => input.setAttribute('required', 'required'));
+            } else {
+                cardDetails.style.display = 'none';
+                cardInputs.forEach(input => input.removeAttribute('required'));
+            }
+        }
+        
+        // Initialize state on load
+        document.addEventListener("DOMContentLoaded", function() {
+            toggleCardDetails();
+        });
+    </script>
+</body>
+</html>
